@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FightTime</string>
+    <string-array name="time">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>
