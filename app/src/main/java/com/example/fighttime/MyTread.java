@@ -11,6 +11,7 @@ public class MyTread implements Runnable{
     ItemRound doNext;
 
     MyTread(int _sec, int _min, TextView _currentTimeView, ItemRound _doNext){
+        System.out.println("MyTread: MyTread");
         sec = _sec;
         min = _min;
         pause = false;
@@ -19,7 +20,8 @@ public class MyTread implements Runnable{
     }
     @Override
     public void run() {
-        showTime();
+        System.out.println("MyTread: run()");
+//        showTime();
         while(true){
             if(!getPauseStatus()) {
                 sec--;
@@ -31,6 +33,7 @@ public class MyTread implements Runnable{
                     break;
                 }
             }
+            showTime();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -44,18 +47,22 @@ public class MyTread implements Runnable{
         doNext.StartRound();
     }
     private void showTime(){
+        System.out.println("MyTread: showTime");
         String string = String.format("%d:%d", min, sec);
         currentTimeView.setText(string);
     }
 
     private boolean getPauseStatus(){
+        System.out.println("MyTread: getPauseStatus, pause:" + pause);
         return pause;
     }
     public void ChangePause(){
+        System.out.println("MyTread: ChangePause, pause->" + !pause);
         pause = !pause;
     }
 
     private boolean getStopStatus(){
+        System.out.println("MyTread: getStopStatus, STOP:" + STOP);
         return STOP;
     }
     public void ChangeStop(){
