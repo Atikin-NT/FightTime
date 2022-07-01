@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -21,9 +22,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
-    ArrayList<ItemRound> roundArrayList = new ArrayList<ItemRound>();
     MyTimer timer;
+    private boolean isRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +32,44 @@ public class MainActivity extends AppCompatActivity {
 
         TextView currentTimeView = (TextView) findViewById(R.id.timeLeft);
         TextView currentStatus = (TextView) findViewById(R.id.roundStatus);
-        timer = new MyTimer(currentTimeView, currentStatus, roundArrayList);
-
+        timer = new MyTimer(currentTimeView, currentStatus);
 
         RecyclerView recyclerView = findViewById(R.id.rvRoundList);
-        RvRoundAdapter adapter = new RvRoundAdapter(roundArrayList);
+        RvRoundAdapter adapter = new RvRoundAdapter(timer.getArray());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        timer.SetAdapter(adapter);
 
         Button startBtn = (Button) findViewById(R.id.BtnStartTimer);
-        Button stopBtn = (Button) findViewById(R.id.BtnStopTimer);
+        if(isRun)
+            startBtn.setText("Stop");
+        else
+            startBtn.setText("Start");
     }
 
     public void startTimerClick(View view) {
-        timer.StartRound();
+        if(isRun)
+            timer.PauseRound();
+        else
+            timer.StartRound();
+        isRun = !isRun;
+    }
+
+    public void addRoundClick(View view) {
+        RoundDialogFragment dialog = new RoundDialogFragment();
+        dialog.show(getSupportFragmentManager(), "custom");
+    }
+
+    public void addRoundAfterDialog(String editTextFightMin,
+                                    String editTextFightSec,
+                                    String editTextBreakMin,
+                                    String editTextBreakSec,
+                                    String editTextCount){
+        timer.addRound(
+                Integer.parseInt(editTextCount),
+                Integer.parseInt(editTextCount),
+                Integer.parseInt(editTextBreakMin) * 60 + Integer.parseInt(editTextBreakSec),
+                Integer.parseInt(editTextFightMin) * 60 + Integer.parseInt(editTextFightSec)
+        );
     }
 }

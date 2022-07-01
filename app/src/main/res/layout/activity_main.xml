@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:background="@color/dark"
     android:padding="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,20 +16,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Menu" />
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="20sp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,45 +36,83 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/roundStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Бой"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/timeLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="02:51"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roundStatus" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/roundStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/timeLeft"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <Button
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/timeLeft">
+
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/BtnStartTimer"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/button_gradient"
+                    style="@style/ButtonStyle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start"
-                    android:onClick="startTimerClick"/>
-                <Button
-                    android:id="@+id/BtnStopTimer"
-                    android:layout_width="match_parent"
+                    android:layout_marginEnd="80dp"
+                    android:onClick="startTimerClick"
+                    android:text="START"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/BtnAddRound"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/BtnAddRound"
+                    style="@style/ButtonStyle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stop"/>
-            </LinearLayout>
-            <LinearLayout
+                    android:background="@drawable/button_gradient"
+                    android:onClick="addRoundClick"
+                    android:text="ADD"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/BtnStartTimer"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRoundList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvRoundList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_height="0dp"
+                android:background="@drawable/list_gradient"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

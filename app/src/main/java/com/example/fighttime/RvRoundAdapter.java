@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +21,11 @@ public class RvRoundAdapter extends RecyclerView.Adapter<RvRoundAdapter.ViewHold
         roundArrayList = _roundArrayList;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView roundCount;
         public TextView fightTime;
         public TextView breakTime;
+        public ImageButton deleteBtn;
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
@@ -32,6 +35,7 @@ public class RvRoundAdapter extends RecyclerView.Adapter<RvRoundAdapter.ViewHold
             roundCount = (TextView) itemView.findViewById(R.id.roundCount);
             fightTime = (TextView) itemView.findViewById(R.id.fightTime);
             breakTime = (TextView) itemView.findViewById(R.id.breakTime);
+            deleteBtn = (ImageButton) itemView.findViewById(R.id.btnDeleteRound);
         }
     }
 
@@ -53,10 +57,22 @@ public class RvRoundAdapter extends RecyclerView.Adapter<RvRoundAdapter.ViewHold
         TextView roundCount = holder.roundCount;
         TextView fightTime = holder.fightTime;
         TextView breakTime = holder.breakTime;
+        ImageButton deleteBtn = holder.deleteBtn;
+        int p = position;
 
         roundCount.setText("Повторений:" + String.valueOf(itemRound.getFightCount()));
         fightTime.setText(itemRound.getFightTime());
         breakTime.setText(itemRound.getBreakTime());
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(p == 0){
+                    itemRound.ForceStop();
+                }
+                itemRound.deleteRound(p);
+            }
+        });
 
     }
 
