@@ -4,4 +4,6 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+    <string name="FightTitle">Бой</string>
+    <string name="BreakTitle">Перерыв</string>
 </resources>

@@ -16,9 +16,11 @@ import java.util.ArrayList;
 public class RvRoundAdapter extends RecyclerView.Adapter<RvRoundAdapter.ViewHolder>{
 
     ArrayList<ItemRound> roundArrayList;
+    MyTimer myTimer;
 
-    public RvRoundAdapter(ArrayList<ItemRound> _roundArrayList){
-        roundArrayList = _roundArrayList;
+    public RvRoundAdapter(MyTimer _myTimer){
+        myTimer = _myTimer;
+        roundArrayList = myTimer.getArray();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -67,10 +69,7 @@ public class RvRoundAdapter extends RecyclerView.Adapter<RvRoundAdapter.ViewHold
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(p == 0){
-                    itemRound.ForceStop();
-                }
-                itemRound.deleteRound(p);
+                myTimer.removeRound(p);
             }
         });
 

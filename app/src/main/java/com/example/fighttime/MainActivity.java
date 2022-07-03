@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         timer = new MyTimer(currentTimeView, currentStatus);
 
         RecyclerView recyclerView = findViewById(R.id.rvRoundList);
-        RvRoundAdapter adapter = new RvRoundAdapter(timer.getArray());
+        RvRoundAdapter adapter = new RvRoundAdapter(timer);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         timer.SetAdapter(adapter);
@@ -48,10 +48,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTimerClick(View view) {
-        if(isRun)
+        Button button = (Button) view;
+        if(isRun){
             timer.PauseRound();
-        else
-            timer.StartRound();
+            button.setText("START");
+        }
+        else{
+            timer.StartRound(-100); // число раундов у 1 ячейки массива
+            button.setText("PAUSE");
+        }
         isRun = !isRun;
     }
 
