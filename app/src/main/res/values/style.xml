@@ -23,4 +23,47 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+<!--    AlertDialog style    -->
+
+    <style name="AlertDialogStyle" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorSurface">@color/dark</item>
+        <item name="colorOnSurface">@color/dark</item>
+        <item name="colorPrimary">@color/dark</item>
+        <item name="colorSecondary">@color/dark</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/AlertDialogStyleText</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AlertDialogPosButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertDialogNegButton</item>
+    </style>
+
+    <style name="AlertDialogTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/greenL1</item>
+        <item name="boxStrokeErrorColor">@color/red</item>
+    </style>
+
+    <style name="AlertDialogTextInput" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:text">@string/ZeroZero</item>
+        <item name="android:inputType">datetime</item>
+        <item name="android:maxLength">2</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    
+    <style name="AlertDialogStyleText" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AlertDialogPosButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/greenL1</item>
+        <item name="backgroundTint">@color/dark</item>
+    </style>
+
+    <style name="AlertDialogNegButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/listGradL1</item>
+        <item name="backgroundTint">@color/dark</item>
+    </style>
+
 </resources>
