@@ -1,5 +1,9 @@
 package com.example.fighttime;
 
+import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +17,11 @@ public class MyTimer {
     private RvRoundAdapter adapter;
     private HandlerTimer handlerTimer;
 
-    MyTimer(TextView _currentTimeView, TextView _currentStatus){
+    private SoundPool sp;
+    private int soundIdShot;
+
+
+    MyTimer(TextView _currentTimeView, TextView _currentStatus, Context context){
         System.out.println("MyTimer: MyTimer");
         currentStatus = _currentStatus;
         currentTimeView = _currentTimeView;
@@ -21,6 +29,14 @@ public class MyTimer {
 
         handlerTimer = new HandlerTimer(0, 0, currentTimeView, this);
         handlerTimer.runTimer();
+
+
+        AudioAttributes audioAttrib = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        sp = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(1).build();
+        soundIdShot = sp.load(context, R.raw.boxing_bell, 1);
 
         rounds.add(new ItemRound(
                 2,
@@ -38,8 +54,8 @@ public class MyTimer {
 
     public void StartRound(int roundNumber){
         System.out.println("MyTimer: StartRound");
-        handlerTimer.startTimer();
         if (rounds.size() != 0){
+            handlerTimer.startTimer();
             int roundN = roundNumber;
             if(roundN == -100 && handlerTimer.isActive()){
                 roundN = rounds.get(0).getRoundsCount();
@@ -60,6 +76,7 @@ public class MyTimer {
                 removeRound(0);
                 StartRound(-100);
             }
+            sp.play(soundIdShot, 1, 1, 0, 0, 1);
         }
     }
 
@@ -72,6 +89,7 @@ public class MyTimer {
                          int fightCount,
                          int breakTime,
                          int fightTime){
+        if(breakCount == 0 || breakTime == 0 || fightTime == 0) return;
         System.out.println("MyTimer: addRound");
         rounds.add(new ItemRound(
                 breakCount,

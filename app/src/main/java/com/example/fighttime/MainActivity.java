@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView currentTimeView = (TextView) findViewById(R.id.timeLeft);
         TextView currentStatus = (TextView) findViewById(R.id.roundStatus);
-        timer = new MyTimer(currentTimeView, currentStatus);
+        timer = new MyTimer(currentTimeView, currentStatus, this);
 
         RecyclerView recyclerView = findViewById(R.id.rvRoundList);
         RvRoundAdapter adapter = new RvRoundAdapter(timer);
@@ -70,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
                                     String editTextBreakMin,
                                     String editTextBreakSec,
                                     String editTextCount){
+        editTextFightMin = editTextFightMin.length() == 0 ? "0" : editTextFightMin;
+        editTextFightSec = editTextFightSec.length() == 0 ? "0" : editTextFightSec;
+        editTextBreakMin = editTextBreakMin.length() == 0 ? "0" : editTextBreakMin;
+        editTextBreakSec = editTextBreakSec.length() == 0 ? "0" : editTextBreakSec;
+        editTextCount = editTextCount.length() == 0 ? "0" : editTextCount;
         timer.addRound(
                 Integer.parseInt(editTextCount),
                 Integer.parseInt(editTextCount),

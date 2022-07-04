@@ -22,7 +22,10 @@ public class CustomTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if(charSequence.charAt(i) > '9' || charSequence.charAt(0) < '0' ){
+        if(charSequence.length() == 1 && (charSequence.charAt(0) > '9' || charSequence.charAt(0) < '0')){
+            changeText("0");
+        }
+        if(charSequence.length() == 2 && (charSequence.charAt(1) > '9' || charSequence.charAt(1) < '0')){
             changeText("0");
         }
     }
