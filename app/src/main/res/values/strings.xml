@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">FightTime</string>
-    <string-array name="time">
-        <item>1</item>
-        <item>2</item>
-    </string-array>
     <string name="FightTitle">Бой</string>
     <string name="BreakTitle">Перерыв</string>
+    <string name="CountTitle">Повторений</string>
+    <string name="NewRound">Новый раунд</string>
+    <string name="ZeroZero">00</string>
+    <string name="Zero">0</string>
+
+    <string name="add">Добавить</string>
+    <string name="cancel">Отмена</string>
 </resources>

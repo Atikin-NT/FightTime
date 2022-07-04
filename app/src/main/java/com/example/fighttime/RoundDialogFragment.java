@@ -12,6 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 public class RoundDialogFragment extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -19,13 +23,21 @@ public class RoundDialogFragment extends DialogFragment {
         LayoutInflater li = LayoutInflater.from(getActivity());
         View promptsView = li.inflate(R.layout.alert_dialog, null);
 
-        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder materialAlertDialog = new MaterialAlertDialogBuilder(getActivity(), R.style.AlertDialogStyle);
 
-        EditText editTextFightMin = (EditText) promptsView.findViewById(R.id.editTextFightMin);
-        EditText editTextFightSec = (EditText) promptsView.findViewById(R.id.editTextFightSec);
-        EditText editTextBreakMin = (EditText) promptsView.findViewById(R.id.editTextBreakMin);
-        EditText editTextBreakSec = (EditText) promptsView.findViewById(R.id.editTextBreakSec);
-        EditText editTextCount = (EditText) promptsView.findViewById(R.id.editTextCount);
+        TextInputLayout editTextFightMinL = (TextInputLayout) promptsView.findViewById(R.id.editTextFightMin);
+        TextInputLayout editTextFightSecL = (TextInputLayout) promptsView.findViewById(R.id.editTextFightSec);
+        TextInputLayout editTextBreakMinL = (TextInputLayout) promptsView.findViewById(R.id.editTextBreakMin);
+        TextInputLayout editTextBreakSecL = (TextInputLayout) promptsView.findViewById(R.id.editTextBreakSec);
+        TextInputLayout editTextCountL = (TextInputLayout) promptsView.findViewById(R.id.editTextCount);
+
+
+        EditText editTextFightMin = editTextFightMinL.getEditText();
+        EditText editTextFightSec = editTextFightSecL.getEditText();
+        EditText editTextBreakMin = editTextBreakMinL.getEditText();
+        EditText editTextBreakSec = editTextBreakSecL.getEditText();
+        EditText editTextCount = editTextCountL.getEditText();
+
         editTextFightMin.setInputType(2);
         editTextFightSec.setInputType(2);
         editTextBreakMin.setInputType(2);
@@ -37,15 +49,14 @@ public class RoundDialogFragment extends DialogFragment {
         editTextBreakMin.addTextChangedListener(new CustomTextWatcher(editTextBreakMin));
         editTextBreakSec.addTextChangedListener(new CustomTextWatcher(editTextBreakSec));
 
-        builder.setView(promptsView);
+        materialAlertDialog.setView(promptsView);
 
-        builder.setTitle("Новый раунд")
-                .setMessage("Введите данные")
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton("Добавить", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getActivity(), "add",
-                                Toast.LENGTH_LONG).show();
+        materialAlertDialog
+                .setTitle(R.string.NewRound)
+                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getActivity(), "add", Toast.LENGTH_LONG).show();
                         ((MainActivity)getActivity()).addRoundAfterDialog(
                                 editTextFightMin.getText().toString(),
                                 editTextFightSec.getText().toString(),
@@ -53,16 +64,16 @@ public class RoundDialogFragment extends DialogFragment {
                                 editTextBreakSec.getText().toString(),
                                 editTextCount.getText().toString()
                         );
-                        dialog.cancel();
+                        dialogInterface.cancel();
                     }
                 })
-                .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_LONG)
-                            .show();
-                        dialog.cancel();
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_LONG).show();
+                        dialogInterface.cancel();
                     }
                 });
-        return builder.create();
+        return materialAlertDialog.create();
     }
 }

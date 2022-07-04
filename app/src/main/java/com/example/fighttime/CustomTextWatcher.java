@@ -3,7 +3,6 @@ package com.example.fighttime;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class CustomTextWatcher implements TextWatcher {
     EditText editText;
@@ -23,7 +22,7 @@ public class CustomTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if(charSequence.length() != 0 && charSequence.charAt(0) >= '7' || (charSequence.length() == 2 && charSequence.charAt(1) > '0' && charSequence.charAt(0) == '6')){
+        if(charSequence.charAt(i) > '9' || charSequence.charAt(0) < '0' ){
             changeText("0");
         }
     }

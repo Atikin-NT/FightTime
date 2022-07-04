@@ -37,7 +37,7 @@ public class HandlerTimer {
             public void run() {
                 int min = handlerTime / 60;
                 int secs = handlerTime % 60;
-                String strTime = String.format("%d:%d", min, secs);
+                String strTime = String.format("%02d:%02d", min, secs);
                 currentTimeView.setText(strTime);
                 if(!pause){
                     handlerTime--;
