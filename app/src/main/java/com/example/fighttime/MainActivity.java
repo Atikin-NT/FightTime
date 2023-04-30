@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     MyTimer timer;
-    private boolean isRun = false;
+    Button startBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         timer.SetAdapter(adapter);
 
-        Button startBtn = (Button) findViewById(R.id.BtnStartTimer);
-        if(isRun)
+        startBtn = (Button) findViewById(R.id.BtnStartTimer);
+        if(timer.IsRun())
             startBtn.setText("Stop");
         else
             startBtn.setText("Start");
@@ -49,15 +49,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTimerClick(View view) {
         Button button = (Button) view;
-        if(isRun){
+        if(timer.IsRun()){
             timer.PauseRound();
             button.setText("START");
         }
         else{
             timer.StartRound(-100); // число раундов у 1 ячейки массива
-            button.setText("PAUSE");
+            if(timer.getArraySize() != 0)
+                button.setText("PAUSE");
         }
-        isRun = !isRun;
+    }
+
+    public void changeButtonStatusToPause(){
+        startBtn.setText("START");
     }
 
     public void addRoundClick(View view) {

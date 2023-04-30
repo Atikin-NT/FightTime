@@ -19,13 +19,16 @@ public class MyTimer {
 
     private SoundPool sp;
     private int soundIdShot;
+    private int soundIdShotTheEnd;
+    Context context;
 
 
-    MyTimer(TextView _currentTimeView, TextView _currentStatus, Context context){
+    MyTimer(TextView _currentTimeView, TextView _currentStatus, Context _context){
         System.out.println("MyTimer: MyTimer");
         currentStatus = _currentStatus;
         currentTimeView = _currentTimeView;
         rounds = new ArrayList<ItemRound>();
+        context = _context;
 
         handlerTimer = new HandlerTimer(0, 0, currentTimeView, this);
         handlerTimer.runTimer();
@@ -37,6 +40,7 @@ public class MyTimer {
                 .build();
         sp = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(1).build();
         soundIdShot = sp.load(context, R.raw.boxing_bell, 1);
+        soundIdShotTheEnd = sp.load(context, R.raw.skyrim, 1);
 
         rounds.add(new ItemRound(
                 2,
@@ -76,7 +80,12 @@ public class MyTimer {
                 removeRound(0);
                 StartRound(-100);
             }
-            sp.play(soundIdShot, 1, 1, 0, 0, 1);
+            if(rounds.size() == 0){
+                sp.play(soundIdShotTheEnd, 1, 1, 0, 0, 1);
+                ((MainActivity)context).changeButtonStatusToPause();
+            }
+            else
+                sp.play(soundIdShot, 1, 1, 0, 0, 1);
         }
     }
 
@@ -110,16 +119,16 @@ public class MyTimer {
         rounds.remove(roundId);
         adapter.notifyItemRemoved(roundId);
     }
-//    public void NextRound(){
-//        System.out.println("MyTimer: NextRound");
-//        // <-- TODO вставить звонок на 10 секунд -->
-//        removeRound(0);
-//        if(rounds.size() != 0){
-//            StartRound();
-//        }
-//    }
+
+    public boolean IsRun(){
+        return handlerTimer.isActive();
+    }
 
     public ArrayList<ItemRound> getArray(){
         return rounds;
+    }
+
+    public int getArraySize(){
+        return rounds.size();
     }
 }
